@@ -1,0 +1,10 @@
+{
+  "customers" : [
+    {
+      "username" : "NI100C",
+      "nome" : "Nick",
+      "cognome" : "Iselle",
+      "password": "test01"
+    }
+  ]
+}

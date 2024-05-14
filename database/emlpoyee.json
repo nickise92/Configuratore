@@ -1,0 +1,19 @@
+{
+  "admins" : [
+    {
+      "username" : "NI001A",
+      "nome" : "Niccolo",
+      "cognome" : "Iselle",
+      "password": "admin01"
+    }
+  ],
+
+  "vendors" : [
+    {
+      "username": "MD123V",
+      "nome": "Mario",
+      "cognome": "Draghi",
+      "password": "vendor01"
+    }
+  ]
+}

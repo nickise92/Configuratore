@@ -17,4 +17,12 @@ public class LoginApp extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void alertDialog(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("dialog-view.fxml"));
+        Scene dialogScene = new Scene(fxmlLoader.load(), 600, 150);
+        stage.setTitle("Attenzione!");
+        stage.setScene(dialogScene);
+        stage.show();
+    }
 }

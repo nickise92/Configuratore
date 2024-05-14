@@ -1,9 +1,10 @@
 package univr.ing.configuratore;
 
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,8 +12,10 @@ import java.nio.file.Paths;
 public class Utente {
     private final String customerPath = "database/customer.json";
     private final String employeePath = "database/employee.json";
+    private final String usersPath = "database/users.json";
 
     private String userName;
+    private String userBirthName;
     private String userPsw;
     private String userID;
     private boolean admin;
@@ -24,40 +27,66 @@ public class Utente {
 
     private void getUserInfo(String userID) {
         // Apertura del 'database' degli impiegati
-        File employeeData = new File(employeePath);
-        // Apertura del 'database' dei clienti
-        File customerData = new File(customerPath);
-
-        // Ricerca dell'ID utente nel database degli impiegati
-
         try {
-            String employeeContent = new String(Files.readAllBytes(Paths.get(employeeData.toURI())));
-            JSONObject employeeJson = new JSONObject(employeeContent);
 
-            if (employeeJson.has(userID)) {
-                this.userName = employeeJson.getString("username");
-                this.userPsw = employeeJson.getString("password");
-                this.userID = userID;
-            } else {
-                String customerContent = new String(Files.readAllBytes(Paths.get(customerData.toURI())));
-                JSONObject customerJson = new JSONObject(customerContent);
+            File usersData = new File(usersPath);
 
-                if (customerJson.has(userID)) {
-                    this.userName = customerJson.getString("username");
-                    this.userPsw = customerJson.getString("password");
+            // Ricerca dell'ID utente nel database degli utenti registrati
+
+            String usersContent = new String(Files.readAllBytes(Paths.get(usersData.toURI())));
+            JSONObject usersObj = new JSONObject(usersContent);
+            JSONArray adminsArr = usersObj.getJSONArray("admins");
+            JSONArray vendorsArr = usersObj.getJSONArray("vendors");
+            JSONArray customersArr = usersObj.getJSONArray("customers");
+
+            // Verifichiamo se l'utente che si sta autenticando e' un amministratore
+            boolean find = false;
+            for (int i = 0; i < adminsArr.length() && !find; i++) {
+                JSONObject admin = (JSONObject) adminsArr.get(i);
+                JSONObject vendor = (JSONObject) vendorsArr.get(i);
+                JSONObject customer = (JSONObject) customersArr.get(i);
+
+                if (userID.equals(admin.getString("username"))) {
+                    System.out.println("Trovato in 'admins'!");
+                    this.userName = admin.getString("nome");
+                    this.userBirthName = admin.getString("cognome");
+                    this.userPsw = admin.getString("password");
                     this.userID = userID;
+                    find = true;
+                } else if (userID.equals(vendor.getString("username"))) {
+                    System.out.println("Trovato in 'vendors'!");
+                    this.userName = vendor.getString("nome");
+                    this.userBirthName = vendor.getString("cognome");
+                    this.userPsw = vendor.getString("password");
+                    this.userID = userID;
+                    find = true;
+                } else if(userID.equals(customer.getString("username"))) {
+                    System.out.println("Trovato in 'customers'!");
+                    this.userName = customer.getString("nome");
+                    this.userBirthName = customer.getString("cognome");
+                    this.userPsw = customer.getString("password");
+                    this.userID = userID;
+                    find = true;
                 } else {
-                    /* TODO:
-                     * mostrare un messaggio di avviso che la password o lo username
-                     * sono incorretti o l'utente non e' registrato
-                     */
+                    System.out.println("Non trovato");
                 }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
 
+
+    }
+
+    public boolean authenticator(String userID, String password) {
+        if (userID.equals(this.userID) && password.equals(this.userPsw)) {
+            System.out.println("L'utente " + userName + " " + userBirthName +
+                    " si è autenticato con successo.");
+            return true;
+        }
+        return false;
     }
 }
