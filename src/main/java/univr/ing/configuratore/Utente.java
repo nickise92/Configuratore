@@ -76,9 +76,6 @@ public class Utente {
             e.printStackTrace();
         }
 
-
-
-
     }
 
     public boolean authenticator(String userID, String password) {

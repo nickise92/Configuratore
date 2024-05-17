@@ -1,0 +1,39 @@
+{
+  "auto": [
+    {},
+    {}
+  ],
+
+  "optional" : [
+     {
+       "ID": 123,
+       "nome": "telecamere",
+       "prezzo": 900.00
+    },
+    {
+      "ID": 234,
+      "nome": "sensori",
+      "prezzo": 650.00
+    },
+    {
+      "ID": 345,
+      "nome": "interni_pelle",
+      "prezzo": 2800.00
+    },
+    {
+      "ID": 456,
+      "nome": "volante_riscaldato",
+      "prezzo": 1200.00
+    },
+    {
+      "ID": 567,
+      "nome": "cruise_control",
+      "prezzo": 1050.00
+    },
+    {
+      "ID": 678,
+      "nome": "gps",
+      "prezzo": 750.00
+    }
+  ]
+}
