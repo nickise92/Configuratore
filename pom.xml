@@ -65,7 +65,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>univr.ing.configuratore/univr.ing.configuratore.StartApplication</mainClass>
+                            <mainClass>univr.ing.configuratore/univr.ing.configuratore.ConfiguratorApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>

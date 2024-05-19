@@ -1,26 +1,20 @@
 package univr.ing.configuratore;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class StartController {
-    @FXML private Button exitButton;
-    @FXML private Button loginButton;
-    @FXML private Button registerButton;
-    @FXML private Button goBackButton;
-    @FXML private Button nextButton;
 
-    @FXML
-    protected void onExitButtonClick() {
-        Stage stage = (Stage) exitButton.getScene().getWindow();
-        stage.close();
-    }
+
+    @FXML private Button loginBtn;
+    @FXML private Button startConfiguratorBtn;
+    @FXML private Button registerBtn;
+
+
 
     @FXML
     protected void onLoginButtonClick() throws IOException {
@@ -30,17 +24,16 @@ public class StartController {
     }
 
     @FXML
-    protected void onRegisterButtonClick() {
+    protected void onRegisterButtonClick() throws IOException {
 
     }
 
     @FXML
-    protected void onGoBackButtonClick() {
-
-    }
-
-    @FXML
-    protected void onNextButtonClick() {
-
+    protected void onStartConfiguratorClick() throws IOException {
+        Stage configuratorApp = new Stage();
+        ConfiguratorApplication configurator = new ConfiguratorApplication();
+        configurator.start(configuratorApp);
+        Stage tmp = (Stage) startConfiguratorBtn.getScene().getWindow();
+        tmp.close();
     }
 }

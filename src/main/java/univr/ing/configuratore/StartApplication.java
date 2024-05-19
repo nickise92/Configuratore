@@ -5,19 +5,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class StartApplication extends Application {
+
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("start-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 920);
-        stage.setTitle("Configuratore auto v1.0");
-        stage.setScene(scene);
+        Scene startScene = new Scene(fxmlLoader.load(), 300, 250);
+        stage.setTitle("Starting...");
+        stage.setScene(startScene);
         stage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
+
+
 }
