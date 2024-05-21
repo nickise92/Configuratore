@@ -5,5 +5,5 @@ import java.util.List;
 
 public class Configuratore {
 
-    List<Auto> catalogo = new ArrayList<Auto>();
+
 }
