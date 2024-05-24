@@ -10,8 +10,5 @@ public class Configuratore {
 
     public static void main(String[] args) {
 
-        Utente user = new Utente("UT111C","Utonto","Test","TestPsw90");
-        user.addUserToDB();
-
     }
 }

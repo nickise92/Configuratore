@@ -19,7 +19,8 @@ public class LoginController {
 
     @FXML
     protected void onAuthentication() {
-        Utente utente = new Utente(userName.getText(), userPsw.getText());
+        Utente utente = new Utente(userName.getText());
+        System.out.println(utente.getUserID());
         if (utente.authenticator(userName.getText(), userPsw.getText())) {
             System.out.println("Access granted!");
             Stage stage = (Stage) userName.getScene().getWindow();
