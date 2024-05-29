@@ -68,6 +68,7 @@ public class ConfiguratorController {
     @FXML
     protected void onBrandSelection() {
         String brand = (String) carBrandChoice.getValue();
+        /// DEBUG
         System.out.println(brand);
 
 
