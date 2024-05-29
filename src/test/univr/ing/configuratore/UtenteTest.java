@@ -23,7 +23,6 @@ class UtenteTest {
     @Test
     void addUserToDB() {
         Utente test = new Utente("UT999C", "Utente", "Test", "testPsw");
-        //test.addUserToDB();
 
         File file = new File("database/users.csv");
         try {

@@ -55,12 +55,12 @@ public class Utente {
                     return true;
                 }
             }
+            sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return false;
     }
-
 
     // Aggiungi un utente al database
     private void addUserToDB() {
@@ -99,6 +99,7 @@ public class Utente {
                     this.userPsw = user[3];         // user password
                 }
             }
+            sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

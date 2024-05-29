@@ -24,7 +24,10 @@ public class StartController {
     }
 
     @FXML
-    protected void onRegisterButtonClick() throws IOException {
+    protected void onRegisterButtonClick() throws Exception {
+        Stage registrationApp = new Stage();
+        RegistrationApp registration = new RegistrationApp();
+        registration.start(registrationApp);
 
     }
 
