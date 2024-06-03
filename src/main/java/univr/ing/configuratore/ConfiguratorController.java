@@ -24,11 +24,16 @@ public class ConfiguratorController {
     private final String carsPath = "database/car.csv";
     private final String enginePath = "database/engine.csv";
     // Adding the ranges to the dropdown menu
-    private ObservableList<String> brandList = FXCollections.observableArrayList(
-            "Audi", "Mercedes", "Opel", "Fiat");
+    private ObservableList<String> brandList = FXCollections.observableArrayList();
     private ObservableList<String> colorsList = FXCollections.observableArrayList(
-            "Bianco", "Rosso", "Blu", "Nero"
+            "Bianco", "Rosso", "Blu", "Nero", "Grigio"
     );
+
+    private Auto configCar;
+    private double carPrice;
+    private double enginePrice;
+    private double colorPrice;
+    private double optionalPrice;
 
     @FXML private Button exitButton;
     @FXML private Button loginButton;
@@ -55,6 +60,18 @@ public class ConfiguratorController {
 
     @FXML
     public void initialize() {
+        try {
+            Scanner sc = new Scanner(new File("database/brand.csv"));
+            for (String car : sc.nextLine().split(",")) {
+                if (!car.equals("")) {
+                    brandList.add(car);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Impossibile inizializzare le marche di auto.");
+        }
+
         carBrandChoice.setItems(brandList);
         carColorChoice.setItems(colorsList);
     }
@@ -68,9 +85,6 @@ public class ConfiguratorController {
     @FXML
     protected void onBrandSelection() {
         String brand = (String) carBrandChoice.getValue();
-        /// DEBUG
-        System.out.println(brand);
-
 
         ObservableList<String> modelList = FXCollections.observableArrayList();
         File db = new File(carsPath);
@@ -90,13 +104,14 @@ public class ConfiguratorController {
         ObservableList<String> engineList = FXCollections.observableArrayList();
         try {
             Scanner sc = new Scanner(new File(enginePath));
-            String tmp = "";
             while (sc.hasNextLine()) {
-                String motore = sc.nextLine();
-                tmp += motore.split(",")[2] + " ";
-                tmp += motore.split(",")[4];
-                engineList.add(tmp);
-                tmp = "";
+                String[] line = sc.nextLine().split(",");
+                if (line.length == 9) {
+                    String tmpEng = line[1];
+                        if (!tmpEng.equals("")) {
+                            engineList.add(tmpEng);
+                    }
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -106,71 +121,56 @@ public class ConfiguratorController {
 
     @FXML
     protected void onModelSelection() {
-        Auto tmpCar = new Auto(carBrandChoice.getValue(), carModelChoice.getValue());
-        double carPrice = Double.valueOf(tmpCar.getPrice());
-        double enginePrice = 47000.00;
-        double price = carPrice + enginePrice;
+        configCar = new Auto(carBrandChoice.getValue(), carModelChoice.getValue());
+        System.out.println(configCar);
 
-        System.out.println(tmpCar.toString());
-        setCarImg(tmpCar.getImgPath(0));
+        carPrice = configCar.getPrice();
+        enginePrice = configCar.getDefaultEngine().getPrice();
+        colorPrice = 0;
+        optionalPrice = 0;
 
-        carHeight.setText(tmpCar.getHeight());
-        carWidth.setText(tmpCar.getWidth());
-        carLength.setText(tmpCar.getLength());
-        trunkVol.setText(tmpCar.getTrunkVol());
-        partialPrice.setText(String.valueOf(price));
-        carWeight.setText(tmpCar.getWeight());
-        carColorChoice.setValue("Bianco");
-        carEngineChoice.setValue("Benzina 150CV");
+        setCarImg(configCar.getImgPath(0));
+
+        carHeight.setText(String.valueOf(configCar.getHeight()));
+        carWidth.setText(String.valueOf(configCar.getWidth()));
+        carLength.setText(String.valueOf(configCar.getLength()));
+        trunkVol.setText(String.valueOf(configCar.getTrunkVol()));
+        partialPrice.setText(String.valueOf(carPrice));
+        carWeight.setText(String.valueOf(configCar.getWeight()));
+        carColorChoice.setValue(configCar.getDefaultColor());
+        carEngineChoice.setValue(configCar.getDefaultEngine().toString());
     }
 
     @FXML
     protected void onEngineSelection() {
-        try {
-            Scanner sc = new Scanner(new File(enginePath));
-            String conf = "";
-            double enginePrice;
-            while (sc.hasNextLine()) {
-                String eng = sc.nextLine();
-                conf += eng.split(",")[2] + " ";
-                conf += eng.split(",")[4];
-                enginePrice = Double.valueOf(eng.split(",")[5]);
-
-                if (conf.equals(carEngineChoice.getValue()) && !conf.equals("Benzina 150CV")) {
-
-                    partialPrice.setText(String.valueOf(enginePrice));
-                }
-
-                conf = "";
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        // Recuperiamo il nome del motore che vogliamo inserire nella vettura
+        // e creiamo l'oggetto Engine corrispondente
+        Engine engine = new Engine(carEngineChoice.getValue());
+        enginePrice = engine.getPrice();
+        partialPrice.setText(String.valueOf(carPrice));
 
         updateRiepilogo();
     }
 
+
+    // Questo metodo gestisce la scelta del colore delle automobili
     @FXML
     protected void onColorSelection() {
         String color = carColorChoice.getValue();
-        String oldColor = "";
-        double price;
 
-        if (!color.equals("Bianco")) {
-            oldColor = color;
-
-            price = Double.valueOf(partialPrice.getText());
-            price += 250.00;
-            partialPrice.setText(String.valueOf(price));
-        } else if (!oldColor.equals("Bianco")) {
-            price = Double.valueOf(partialPrice.getText());
-            price -= 250.00;
-            partialPrice.setText(String.valueOf(price));
+        if (!color.equals(configCar.getDefaultColor()) && colorPrice == 0) {
+            colorPrice = 800.00;
+            partialPrice.setText(String.valueOf(carPrice));
+        } else if (!color.equals(configCar.getDefaultColor()) && colorPrice > 0) {
+            // Se cambio colore ma non ritorno a quello di default non cambia il prezzo
+            // I colori costano tutti uguali
+        } else if (color.equals(configCar.getDefaultColor()) && colorPrice > 0) {
+            // Sono tortato al colore di default dopo averlo cambiato, quindi reimposto
+            // il valore a 0
+            colorPrice = 0;
         }
-
         updateRiepilogo();
     }
-
 
     @FXML
     protected void setCarImg(String path) {
@@ -202,13 +202,15 @@ public class ConfiguratorController {
     }
 
     private void updateRiepilogo() {
+        carPrice = colorPrice + enginePrice + optionalPrice;
+        partialPrice.setText(String.valueOf(carPrice));
         String riep = "";
-        if (carColorChoice.getValue() != null && !carColorChoice.getValue().equals("Bianco")) {
-            riep += "Colore: " + carColorChoice.getValue() + " +250.00€\n";
+        if (carColorChoice.getValue() != null) {
+            riep += "Colore: " + carColorChoice.getValue() + " " + colorPrice + ".00€\n";
         }
 
-        if (carEngineChoice.getValue() != null && carEngineChoice.getValue().equals("Diesel 136CV")) {
-            riep += "Motore: " + carEngineChoice.getValue() + " +1750.00€\n";
+        if (carEngineChoice.getValue() != null) {
+            riep += "Motore: " + carEngineChoice.getValue() + " " + enginePrice + ".00€\n";
         }
 
         riepilogo.setText(riep);

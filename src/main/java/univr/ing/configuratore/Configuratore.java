@@ -10,5 +10,8 @@ public class Configuratore {
 
     public static void main(String[] args) {
 
+        Auto test = new Auto("Audi", "A4");
+
+        System.out.println(test);
     }
 }
