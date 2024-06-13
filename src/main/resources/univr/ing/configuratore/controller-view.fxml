@@ -8,20 +8,16 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" styleClass="imageViewer" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.ing.configuratore.ConfiguratorController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="920.0" styleClass="imageViewer" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.ing.configuratore.ConfiguratorController">
    <children>
       <Separator layoutX="15.0" layoutY="100.0" prefHeight="5.0" prefWidth="890.0" />
-      <ImageView fx:id="carImg" fitHeight="400.0" fitWidth="400.0" layoutX="500.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="300.0" layoutY="25.0" prefHeight="52.0" prefWidth="400.0" text="Configuratore auto">
+      <Label fx:id="titleText" layoutX="300.0" layoutY="25.0" prefHeight="52.0" prefWidth="400.0" text="Configuratore auto" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font name="Arial Bold" size="44.0" />
          </font>
       </Label>
-      <Separator layoutX="490.0" layoutY="576.0" prefHeight="5.0" prefWidth="420.0" />
-      <AnchorPane layoutX="15.0" layoutY="105.0" />
       <Button fx:id="loginButton" layoutX="465.0" layoutY="661.0" maxHeight="25.0" maxWidth="70.0" minHeight="25.0" minWidth="70.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="70.0" text="Accedi" textFill="BLUE" />
       <Button fx:id="registerButton" layoutX="545.0" layoutY="661.0" maxHeight="25.0" maxWidth="70.0" minHeight="25.0" minWidth="70.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" prefHeight="25.0" prefWidth="70.0" text="Registrati" textFill="BLUE" />
       <Button fx:id="goBackButton" disable="true" layoutX="676.0" layoutY="661.0" maxHeight="25.0" maxWidth="70.0" minHeight="25.0" minWidth="70.0" mnemonicParsing="false" onAction="#onGoBackButtonClick" prefHeight="25.0" prefWidth="70.0" text="Indietro" />
@@ -54,22 +50,22 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="143.0" layoutY="195.0" text="Larghezza:">
+      <Label layoutX="180.0" layoutY="195.0" text="Larghezza:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="carWidth" layoutX="217.0" layoutY="195.0" text="-">
+      <Label fx:id="carWidth" layoutX="254.0" layoutY="195.0" text="-">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="265.0" layoutY="195.0" text="Altezza:">
+      <Label layoutX="341.0" layoutY="195.0" text="Altezza:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="carHeight" layoutX="319.0" layoutY="195.0" text="-">
+      <Label fx:id="carHeight" layoutX="395.0" layoutY="195.0" text="-">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -86,7 +82,6 @@
          </font>
       </Label>
       <ChoiceBox fx:id="carColorChoice" layoutX="82.0" layoutY="306.0" onAction="#onColorSelection" prefWidth="150.0" />
-      <Separator layoutX="481.0" layoutY="184.0" orientation="VERTICAL" prefHeight="394.0" prefWidth="6.0" />
       <AnchorPane fx:id="pannelloRiepilogo" layoutX="21.0" layoutY="381.0" prefHeight="299.0" prefWidth="325.0">
          <children>
             <Label layoutX="125.0" layoutY="14.0" text="Riepilogo">
@@ -104,7 +99,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextArea fx:id="riepilogo" editable="false" layoutX="29.0" layoutY="85.0" prefHeight="200.0" prefWidth="267.0" />
+            <TextArea fx:id="riepilogo" editable="false" layoutX="29.0" layoutY="85.0" prefHeight="200.0" prefWidth="267.0" AnchorPane.bottomAnchor="15.0" />
             <Label layoutX="30.0" layoutY="68.0" text="Lista modifiche (parziale):" />
          </children>
       </AnchorPane>
@@ -118,18 +113,26 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="593.0" layoutY="581.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="&lt;-" />
-      <Button layoutX="689.0" layoutY="581.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="-&gt;" />
-      <Label layoutX="196.0" layoutY="223.0" prefHeight="20.0" prefWidth="41.0" text="Peso:">
+      <Label layoutX="341.0" layoutY="223.0" prefHeight="20.0" prefWidth="41.0" text="Peso:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="carWeight" layoutX="237.0" layoutY="223.0" text="-">
+      <Label fx:id="carWeight" layoutX="382.0" layoutY="223.0" text="-">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <AnchorPane fx:id="imageAnchor" layoutX="500.0" layoutY="164.0" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="120.0" AnchorPane.topAnchor="160.0">
+         <children>
+            <Separator />
+            <ImageView fx:id="carImg" fitHeight="350.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+            <Separator orientation="VERTICAL" prefHeight="400.0" prefWidth="2.0" />
+            <Separator layoutY="400.0" />
+            <Button fx:id="leftImgArrow" layoutX="120.0" layoutY="410.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="&lt;-" AnchorPane.bottomAnchor="5.0" />
+            <Button fx:id="rightImgArrow" layoutX="210.0" layoutY="410.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="-&gt;" AnchorPane.bottomAnchor="5.0" />
+         </children>
+      </AnchorPane>
 
 
 
@@ -137,4 +140,4 @@
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
    </padding>
-</Pane>
+</AnchorPane>

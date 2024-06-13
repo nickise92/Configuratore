@@ -1,5 +1,6 @@
 package univr.ing.configuratore;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -35,6 +37,11 @@ public class ConfiguratorController {
     private double colorPrice;
     private double optionalPrice;
 
+    @FXML private Label titleText;
+    @FXML private AnchorPane anchorPane;
+    @FXML private AnchorPane imageAnchor;
+    @FXML private Button leftImgArrow;
+    @FXML private Button rightImgArrow;
     @FXML private Button exitButton;
     @FXML private Button loginButton;
     @FXML private Button registerButton;
@@ -60,6 +67,19 @@ public class ConfiguratorController {
 
     @FXML
     public void initialize() {
+        // Binding di tutti i componenti dell'interfaccia alle dimensioni
+        // della finestra principale.
+
+        AnchorPane.setTopAnchor(titleText, 25.0);
+        AnchorPane.setBottomAnchor(exitButton, 15.0);
+        AnchorPane.setRightAnchor(exitButton, 15.0);
+        AnchorPane.setBottomAnchor(loginButton, 15.0);
+        AnchorPane.setBottomAnchor(registerButton, 15.0);
+        AnchorPane.setBottomAnchor(goBackButton, 15.0);
+        AnchorPane.setBottomAnchor(nextButton, 15.0);
+        AnchorPane.setRightAnchor(imageAnchor, 20.0);
+        AnchorPane.setTopAnchor(imageAnchor, 165.0);
+
         try {
             Scanner sc = new Scanner(new File("database/brand.csv"));
             for (String car : sc.nextLine().split(",")) {
