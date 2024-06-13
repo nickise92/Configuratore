@@ -2,9 +2,12 @@ package univr.ing.configuratore;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utente {
     private final String usersPath = "database/users.csv";
+    private static final String PATTERN = "[A-Z]{2}[0-9]{3}[AV]{1}";
 
     private String userName;
     private String userLastName;
@@ -112,6 +115,42 @@ public class Utente {
             return true;
         }
         return false;
+    }
+
+    public static Utente checkID(String ID) {
+        Pattern namePattern = Pattern.compile(PATTERN);
+        Matcher nameMatcher = namePattern.matcher(ID);
+
+        try {
+            Scanner sc = new Scanner(new File("database/users.csv"));
+
+            while (sc.hasNextLine()) {
+                String tmp = sc.nextLine().split(",")[0];
+
+                // Se l'ID corrisponde al pattern, verifichiamo se l'utente e' un
+                // Venditore o un Impiegato.
+                if (nameMatcher.matches()) {
+
+                    if (tmp.equals(ID)) {
+                        if (tmp.charAt(5) == 'V') {
+                            return new Venditore(ID);
+                        } else {
+                            return new Impiegato(ID);
+                        }
+                    }
+                } else {
+                    // Altrimenti, se l'ID esiste e' un Cliente.
+                    if (tmp.equals(ID)) {
+                        return new Cliente(ID);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // L'utente non e' stato trovato, ritorna null.
+        return null;
     }
 
 }

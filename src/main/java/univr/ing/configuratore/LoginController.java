@@ -19,11 +19,43 @@ public class LoginController {
 
     @FXML
     protected void onAuthentication() {
-        Utente utente = new Utente(userName.getText());
+        Utente utente = Utente.checkID(userName.getText());
+
+        /*System.out.println(utente instanceof Venditore);
+        System.out.println(utente instanceof Cliente);
+        System.out.println(utente instanceof Impiegato);*/
+
+
         System.out.println(utente.getUserID());
         if (utente.authenticator(userName.getText(), userPsw.getText())) {
             System.out.println("Access granted!");
             Stage stage = (Stage) userName.getScene().getWindow();
+            if (utente instanceof Impiegato) { // E' amministratore
+                Stage adminForm = new Stage();
+                AdminApplication adminApp = new AdminApplication();
+                try {
+                    adminApp.start(adminForm);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (utente instanceof Venditore) { // E' negoziante
+                Stage vendorForm = new Stage();
+                VendorApplication vendorApp = new VendorApplication();
+                try {
+                    vendorApp.start(vendorForm);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (utente instanceof Cliente) { // Apre il configuratore
+                Stage configForm = new Stage();
+                ConfiguratorApplication configApp = new ConfiguratorApplication();
+                try {
+                    configApp.start(configForm);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
             stage.close();
         } else {
             System.out.println("Access denied!");
@@ -35,6 +67,8 @@ public class LoginController {
                 e.printStackTrace();
             }
         }
+
+
 
     }
 

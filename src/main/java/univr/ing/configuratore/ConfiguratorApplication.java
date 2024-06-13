@@ -17,6 +17,7 @@ public class ConfiguratorApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 780, 640);
         stage.setTitle("Configuratore auto v1.0");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
 
     }
