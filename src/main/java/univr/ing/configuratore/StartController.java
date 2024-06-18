@@ -21,6 +21,8 @@ public class StartController {
         Stage loginStage = new Stage();
         LoginApp login = new LoginApp();
         login.start(loginStage);
+        Stage stage = (Stage) loginBtn.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

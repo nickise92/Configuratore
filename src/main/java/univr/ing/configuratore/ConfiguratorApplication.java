@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ConfiguratorApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ConfiguratorApplication.class.getResource("controller-view.fxml"));
@@ -25,6 +26,5 @@ public class ConfiguratorApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 
 }

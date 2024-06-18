@@ -31,12 +31,15 @@ public class ConfiguratorController {
             "Bianco", "Rosso", "Blu", "Nero", "Grigio"
     );
 
+    private Cliente user;
+
     private Auto configCar;
     private double carPrice;
     private double enginePrice;
     private double colorPrice;
     private double optionalPrice;
 
+    @FXML private Label userLogged;
     @FXML private Label titleText;
     @FXML private AnchorPane anchorPane;
     @FXML private AnchorPane imageAnchor;
@@ -94,6 +97,7 @@ public class ConfiguratorController {
 
         carBrandChoice.setItems(brandList);
         carColorChoice.setItems(colorsList);
+
     }
 
     @FXML
@@ -200,15 +204,26 @@ public class ConfiguratorController {
     }
 
     @FXML
-    protected void onLoginButtonClick() throws IOException {
+    protected void onLoginButtonClick() {
         Stage loginStage = new Stage();
         LoginApp login = new LoginApp();
-        login.start(loginStage);
+        try {
+            login.start(loginStage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
     protected void onRegisterButtonClick() {
-        // TODO creazione nuovo utente, users.json -> users.csv
+        Stage registrationApp = new Stage();
+        RegistrationApp registration = new RegistrationApp();
+        try {
+            registration.start(registrationApp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

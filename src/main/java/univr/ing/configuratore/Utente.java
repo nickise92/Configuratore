@@ -1,5 +1,8 @@
 package univr.ing.configuratore;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -9,10 +12,16 @@ public class Utente {
     private final String usersPath = "database/users.csv";
     private static final String PATTERN = "[A-Z]{2}[0-9]{3}[AV]{1}";
 
+    private final StringProperty userNameToPass = new SimpleStringProperty();
+
     private String userName;
     private String userLastName;
     private String userPsw;
     private String userID;
+
+    public  Utente() {
+
+    }
 
     // Costruttore di un nuovo utente usato per la registrazione
     public Utente(String userID, String userName, String userLastName, String userPsw) {
@@ -31,7 +40,7 @@ public class Utente {
     }
 
     // Costruttore che permette di recuperare le informazioni di un utente esistente
-    public Utente(String user) {
+   public Utente(String user) {
         getUserInfo(user);
     }
 
@@ -151,6 +160,20 @@ public class Utente {
 
         // L'utente non e' stato trovato, ritorna null.
         return null;
+    }
+
+    // Return the stringProperty to the caller
+    public StringProperty userNameToPassProperty() {
+        return userNameToPass;
+    }
+
+    // Getter and setter
+    public final String getUserNameToPass() {
+        return userNameToPass.get();
+    }
+
+    public final void setUserNameToPass(String username) {
+        userNameToPass.set(username);
     }
 
 }

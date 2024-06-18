@@ -20,17 +20,12 @@ public class LoginController {
     @FXML
     protected void onAuthentication() {
         Utente utente = Utente.checkID(userName.getText());
-
-        /*System.out.println(utente instanceof Venditore);
-        System.out.println(utente instanceof Cliente);
-        System.out.println(utente instanceof Impiegato);*/
-
-
-        System.out.println(utente.getUserID());
-        if (utente.authenticator(userName.getText(), userPsw.getText())) {
+        // Se l'utente esiste, e le credenziali sono corrette il sistema verifica a quale
+        // sotto categoria di utente appartiene, aprendo di conseguenza la corretta interfaccia
+        if (utente != null && utente.authenticator(userName.getText(), userPsw.getText())) {
             System.out.println("Access granted!");
             Stage stage = (Stage) userName.getScene().getWindow();
-            if (utente instanceof Impiegato) { // E' amministratore
+            if (utente instanceof Impiegato) { // È amministratore
                 Stage adminForm = new Stage();
                 AdminApplication adminApp = new AdminApplication();
                 try {
@@ -38,7 +33,7 @@ public class LoginController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (utente instanceof Venditore) { // E' negoziante
+            } else if (utente instanceof Venditore) { // È negoziante
                 Stage vendorForm = new Stage();
                 VendorApplication vendorApp = new VendorApplication();
                 try {
@@ -54,11 +49,11 @@ public class LoginController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
             stage.close();
         } else {
-            System.out.println("Access denied!");
+            // Se l'utente è nullo o le credenziali non sono corrette
+            // il sistema mostra un messaggio di errore.
             Stage alertStage = new Stage();
             LoginApp alertMsg = new LoginApp();
             try {
@@ -67,13 +62,11 @@ public class LoginController {
                 e.printStackTrace();
             }
         }
-
-
-
     }
 
     @FXML
     protected void onOKClick() {
+
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
     }

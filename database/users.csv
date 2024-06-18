@@ -1,7 +1,7 @@
-MB100V,Mario,Bianchi,vendor01,
-GV101V,Giuseppe,Verdi,vendor02,
-CR102V,Carla,Rossi,vendor03,
-LN103V,Laura,Neri,vendor04,
+MB100V,Mario,Bianchi,vendor01,Verona
+GV101V,Giuseppe,Verdi,vendor02,Milano
+CR102V,Carla,Rossi,vendor03,Roma
+LN103V,Laura,Neri,vendor04,Torino
 NI001A,Niccolo,Iselle,admin01,
 PB002A,Pietro,Bianchedi,admin02,
-Carlo,Il,Combi,ing,
+Felpa,Matteo,Salvini,123
