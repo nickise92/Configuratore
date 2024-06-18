@@ -8,6 +8,8 @@ import java.io.IOException;
 
 public class VendorController {
 
+    private Venditore vendor;
+
     @FXML private Button manageOrder;
 
     public void onManageOrder() {
